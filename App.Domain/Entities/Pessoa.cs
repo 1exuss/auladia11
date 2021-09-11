@@ -11,5 +11,8 @@ namespace App.Domain.Entities
         public int Peso { get; set; }
         public DateTime DataNascimento { get; set; }
         public bool Ativo { get; set; }
+        public Guid? CidadeId { get; set; }//nometabela + id é referencia
+        public Cidade Cidade { get; set; }
+    
     }
 }

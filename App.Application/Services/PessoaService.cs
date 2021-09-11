@@ -18,14 +18,27 @@ namespace App.Application.Services
         }
         public Pessoa BuscaPorId(Guid id)
         {
-            throw new NotImplementedException();
+           // throw new NotImplementedException();
             var obj = _repository.Query(x => x.Id == id).FirstOrDefault();
             return obj;
         }
 
         public List<Pessoa> listaPessoas()
         {
-            return _repository.Query(x => 1 == 1).ToList();
+            return _repository.Query(x => 1 == 1)
+            .Select(p => new Pessoa
+          {
+              Id = p.Id,
+              Nome = p.Nome,
+              DataNascimento = p.DataNascimento,
+              Peso = p.Peso,
+              Cidade = new Cidade
+              {
+                  Nome = p.Cidade.Nome
+
+              }
+
+          }).ToList();
         }
         public void Salvar (Pessoa obj)
         {
