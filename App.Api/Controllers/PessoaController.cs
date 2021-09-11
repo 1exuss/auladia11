@@ -21,9 +21,11 @@ namespace App.Api.Controllers
         }
 
         [HttpGet("ListarPessoas")]
-        public JsonResult ListaPessoas()
+        public JsonResult ListaPessoas(string nome, int pesoMenorQue, int pesoMaiorQue)
         {
-            return Json(_service.listaPessoas());
+
+            return Json(_service.listaPessoas(nome, pesoMenorQue, pesoMaiorQue));
+            
         }
         [HttpGet("BuscarPorId")]
         public JsonResult BuscarPorId(Guid id)

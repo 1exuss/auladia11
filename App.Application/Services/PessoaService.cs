@@ -23,22 +23,28 @@ namespace App.Application.Services
             return obj;
         }
 
-        public List<Pessoa> listaPessoas()
-        {
-            return _repository.Query(x => 1 == 1)
+        public List<Pessoa> listaPessoas(string nome, int pesoMaiorque, int pesoMenorQue)
+        { //x.nome.contains
+            nome = (nome ?? "");
+
+            return _repository.Query(x => x.Nome.ToUpper().Contains(nome.ToUpper()) 
+            && (pesoMaiorque == 0 || x.Peso >= pesoMaiorque)
+            && (pesoMenorQue == 0 || x.Peso <= pesoMenorQue))
             .Select(p => new Pessoa
           {
+              
               Id = p.Id,
               Nome = p.Nome,
               DataNascimento = p.DataNascimento,
               Peso = p.Peso,
+              Ativo = p.Ativo,
               Cidade = new Cidade
               {
-                  Nome = p.Cidade.Nome
-
+                  Nome = p.Cidade.Nome,
+                  Id = p.Cidade.Id,
               }
 
-          }).ToList();
+          }).OrderByDescending(x => x.Nome).ToList();
         }
         public void Salvar (Pessoa obj)
         {
