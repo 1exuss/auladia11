@@ -1,11 +1,7 @@
 ﻿using App.Domain.Entities;
 using App.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace App.Api.Controllers
 {
@@ -20,13 +16,14 @@ namespace App.Api.Controllers
             _service = service;
         }
 
-        [HttpGet("ListarCidades")]
-        public JsonResult Listacidades()
+        [HttpGet("ListaCidades")]
+        public JsonResult ListaCidades()
         {
             return Json(_service.listaCidades());
         }
-        [HttpGet("BuscarPorId")]
-        public JsonResult BuscarPorId(Guid id)
+
+        [HttpGet("BuscaPorId")]
+        public JsonResult BuscaPorId(Guid id)
         {
             return Json(_service.BuscaPorId(id));
         }
@@ -36,13 +33,14 @@ namespace App.Api.Controllers
             var obj = new Cidade
             {
                 Nome = nome,
-                Cep = cep,
-                Uf = uf,
+                CEP = cep,
+                UF = uf
             };
             _service.Salvar(obj);
             return Json(true);
         }
-        [HttpPost("Delete")]
+
+        [HttpDelete("Remover")]
         public JsonResult Remover(Guid id)
         {
             _service.Remover(id);

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace App.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210911171615_update1234")]
-    partial class update1234
+    [Migration("20210911171751_Update2")]
+    partial class Update2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,13 +27,13 @@ namespace App.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Cep")
+                    b.Property<string>("CEP")
                         .HasColumnType("text");
 
                     b.Property<string>("Nome")
                         .HasColumnType("text");
 
-                    b.Property<string>("Uf")
+                    b.Property<string>("UF")
                         .HasColumnType("text");
 
                     b.HasKey("Id");

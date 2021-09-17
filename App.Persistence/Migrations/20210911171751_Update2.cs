@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace App.Persistence.Migrations
 {
-    public partial class Update123 : Migration
+    public partial class Update2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,8 @@ namespace App.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Nome = table.Column<string>(type: "text", nullable: true),
-                    Cep = table.Column<string>(type: "text", nullable: true),
-                    Uf = table.Column<string>(type: "text", nullable: true)
+                    UF = table.Column<string>(type: "text", nullable: true),
+                    CEP = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

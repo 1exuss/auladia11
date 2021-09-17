@@ -4,8 +4,6 @@ using App.Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App.Application.Services
 {
@@ -18,46 +16,45 @@ namespace App.Application.Services
         }
         public Pessoa BuscaPorId(Guid id)
         {
-           // throw new NotImplementedException();
+            if (id == Guid.Empty)
+            {
+                throw new Exception("Informe o id");
+            }
             var obj = _repository.Query(x => x.Id == id).FirstOrDefault();
             return obj;
         }
 
-        public List<Pessoa> listaPessoas(string nome, int pesoMaiorque, int pesoMenorQue)
-        { //x.nome.contains
-            nome = (nome ?? "");
-
-            return _repository.Query(x => x.Nome.ToUpper().Contains(nome.ToUpper()) 
-            && (pesoMaiorque == 0 || x.Peso >= pesoMaiorque)
-            && (pesoMenorQue == 0 || x.Peso <= pesoMenorQue))
-            .Select(p => new Pessoa
-          {
-              
-              Id = p.Id,
-              Nome = p.Nome,
-              DataNascimento = p.DataNascimento,
-              Peso = p.Peso,
-              Ativo = p.Ativo,
-              Cidade = new Cidade
-              {
-                  Nome = p.Cidade.Nome,
-                  Id = p.Cidade.Id,
-              }
-
-          }).OrderByDescending(x => x.Nome).ToList();
-        }
-        public void Salvar (Pessoa obj)
+        public List<Pessoa> listaPessoas(string nome, int pesoMaiorQue, int pesoMenorQue)
         {
-            if (string.IsNullOrEmpty(obj.Nome))
+
+            nome = nome ?? "";
+            return _repository.Query(x =>
+            x.Nome.ToUpper().Contains(nome.ToUpper()) &&
+            (pesoMaiorQue == 0 || x.Peso >= pesoMaiorQue) &&
+            (pesoMenorQue == 0 || x.Peso <= pesoMenorQue)
+            ).Select(p => new Pessoa
             {
-                throw new Exception("Informe o Nome ");
-            }
-            _repository.Save(obj);
-            _repository.SaveChanges();
+                Id = p.Id,
+                Nome = p.Nome,
+                Peso = p.Peso,
+                Cidade = new Cidade
+                {
+                    Nome = p.Cidade.Nome
+                }
+            }).OrderByDescending(x => x.Nome).ToList();
         }
         public void Remover(Guid id)
         {
             _repository.Delete(id);
+            _repository.SaveChanges();
+        }
+        public void Salvar(Pessoa obj)
+        {
+            if (String.IsNullOrEmpty(obj.Nome))
+            {
+                throw new Exception("Informe o nome");
+            }
+            _repository.Save(obj);
             _repository.SaveChanges();
         }
     }

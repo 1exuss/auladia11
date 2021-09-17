@@ -25,13 +25,13 @@ namespace App.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Cep")
+                    b.Property<string>("CEP")
                         .HasColumnType("text");
 
                     b.Property<string>("Nome")
                         .HasColumnType("text");
 
-                    b.Property<string>("Uf")
+                    b.Property<string>("UF")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
