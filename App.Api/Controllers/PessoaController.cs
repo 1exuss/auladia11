@@ -1,13 +1,8 @@
 ﻿using App.Domain.DTO;
 using App.Domain.Entities;
 using App.Domain.Interfaces.Application;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace App.Api.Controllers
 {
@@ -23,7 +18,6 @@ namespace App.Api.Controllers
         }
 
         [HttpGet("ListaPessoas")]
-        [AllowAnonymous]
         public JsonResult ListaPessoas(string nome, int pesoMaiorQue, int pesoMenorQue)
         {
             try
@@ -38,7 +32,6 @@ namespace App.Api.Controllers
         }
 
         [HttpGet("BuscaPorId")]
-        [AllowAnonymous]
         public JsonResult BuscaPorId(Guid id)
         {
             try
@@ -50,40 +43,27 @@ namespace App.Api.Controllers
             {
                 return Json(RetornoApi.Erro(ex.Message));
             }
-
         }
-
         [HttpPost("Salvar")]
-        [AllowAnonymous]
-        public JsonResult Salvar(string nome, int peso, DateTime dataNascimento, bool ativo, Guid cidadeId)
+        public JsonResult Salvar([FromBody] Pessoa obj)
         {
-            //var datanascimentoformatada = dataNascimento.ToString("yyyy-mm-dd");
             try
             {
-                var obj = new Pessoa
-                {
-                    Nome = nome,
-                    DataNascimento = dataNascimento,
-                    Peso = peso,
-                    Ativo = ativo,
-                    CidadeId = cidadeId
-                };
                 _service.Salvar(obj);
                 return Json(RetornoApi.Sucesso(true));
             }
             catch (Exception ex)
             {
                 return Json(RetornoApi.Erro(ex.Message));
-            }          
+            }
         }
 
-        [HttpPost("Deletar")]
-        [AllowAnonymous]
+        [HttpDelete("Remover")]
         public JsonResult Remover(Guid id)
         {
             try
             {
-                _service.Remover(id);
+                _service.Remover(id); ;
                 return Json(RetornoApi.Sucesso(true));
             }
             catch (Exception ex)

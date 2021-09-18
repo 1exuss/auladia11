@@ -8,15 +8,16 @@
 });
 
 function load() {
-    let cidade = $('[name="busca"]').val();
-    CidadeListaCidades(cidade).then(function (data) {
+    let pessoa = $('[name="busca"]').val();
+    PessoaListaPessoas(pessoa).then(function (data) {
         $('#table tbody').html('');
         data.forEach(obj => {
             $('#table tbody').append('' +
                 '<tr id="obj-' + obj.id + '">' +
-                '<td>' + (obj.cep || '--') + '</td>' +
                 '<td>' + (obj.nome || '--') + '</td>' +
-                '<td>' + (obj.uf || '--') + '</td>' +
+                '<td>' + (moment(obj.dataNascimento || '--').format('dd/mm/yyyy'))+ '</td>' +
+                '<td>' + (obj.peso || '--') + '</td>' +
+                '<td>' + (obj.ativo || '--') + '</td>' +
                 '</tr>');
         });
     });

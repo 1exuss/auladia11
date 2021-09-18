@@ -4,9 +4,6 @@ using App.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace App.Api.Controllers
 {
@@ -23,23 +20,20 @@ namespace App.Api.Controllers
 
         [HttpGet("ListaCidades")]
         [AllowAnonymous]
-        public JsonResult ListaCidades()
+        public JsonResult ListaCidades(string busca)
         {
             try
             {
-                var obj = _service.listaCidades();
+                var obj = _service.listaCidades(busca);
                 return Json(RetornoApi.Sucesso(obj));
             }
             catch (Exception ex)
             {
                 return Json(RetornoApi.Erro(ex.Message));
             }
-            //return Json(_service.listaCidades());
         }
 
         [HttpGet("BuscaPorId")]
-        [AllowAnonymous]
-
         public JsonResult BuscaPorId(Guid id)
         {
             try
@@ -51,22 +45,12 @@ namespace App.Api.Controllers
             {
                 return Json(RetornoApi.Erro(ex.Message));
             }
-
         }
-
         [HttpPost("Salvar")]
-        [AllowAnonymous]
-        public JsonResult Salvar(string nome, string cep, string uf)
+        public JsonResult Salvar([FromBody] Cidade obj)
         {
             try
             {
-                var obj = new Cidade
-                {
-                    Nome = nome,
-                    CEP = cep,
-                    UF = uf
-                };
-
                 _service.Salvar(obj);
                 return Json(RetornoApi.Sucesso(true));
             }
@@ -74,11 +58,9 @@ namespace App.Api.Controllers
             {
                 return Json(RetornoApi.Erro(ex.Message));
             }
-
         }
 
-        [HttpPost("Deletar")]
-        [AllowAnonymous]
+        [HttpDelete("Remover")]
         public JsonResult Remover(Guid id)
         {
             try
@@ -90,7 +72,6 @@ namespace App.Api.Controllers
             {
                 return Json(RetornoApi.Erro(ex.Message));
             }
-
         }
     }
 }
