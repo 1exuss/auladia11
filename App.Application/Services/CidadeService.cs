@@ -4,6 +4,8 @@ using App.Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace App.Application.Services
 {
@@ -14,22 +16,8 @@ namespace App.Application.Services
         {
             _repository = repository;
         }
-        public Cidade BuscaPorCep(string cep)
-        {
-            if (!String.IsNullOrEmpty(cep))
-            {
-                throw new Exception("Informe o CEP!");
-            }
-            var obj = _repository.Query(x => x.CEP == cep).FirstOrDefault();
-            return obj;
-        }
-
         public Cidade BuscaPorId(Guid id)
         {
-            if (id == Guid.Empty)
-            {
-                throw new Exception("Informe o id!");
-            }
             var obj = _repository.Query(x => x.Id == id).FirstOrDefault();
             return obj;
         }
@@ -39,19 +27,28 @@ namespace App.Application.Services
             return _repository.Query(x => 1 == 1).ToList();
         }
 
-        public void Remover(Guid id)
-        {
-            _repository.Delete(id);
-            _repository.SaveChanges();
-        }
-
         public void Salvar(Cidade obj)
         {
             if (String.IsNullOrEmpty(obj.Nome))
             {
-                throw new Exception("Informe o nome");
+                throw new Exception("Informe o nome da Cidade");
+
+            } else if (String.IsNullOrEmpty(obj.CEP))
+            {
+                throw new Exception("Informe o CEP da Cidade");
+
+            } else if(String.IsNullOrEmpty(obj.UF))
+            {
+                throw new Exception("Informe a Unidade da Federação da Cidade");
             }
+
             _repository.Save(obj);
+            _repository.SaveChanges();
+        }
+
+        public void Remover(Guid id)
+        {
+            _repository.Delete(id);
             _repository.SaveChanges();
         }
     }

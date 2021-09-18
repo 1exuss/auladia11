@@ -12,9 +12,9 @@ namespace App.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Nome = table.Column<string>(type: "text", nullable: true),
+                    CEP = table.Column<string>(type: "text", nullable: true),
                     UF = table.Column<string>(type: "text", nullable: true),
-                    CEP = table.Column<string>(type: "text", nullable: true)
+                    Nome = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

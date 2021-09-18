@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace App.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210911173212_Update3")]
+    [Migration("20210911171742_Update3")]
     partial class Update3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,9 +50,6 @@ namespace App.Persistence.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid?>("CidadeId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("timestamp without time zone");
 
@@ -64,18 +61,7 @@ namespace App.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CidadeId");
-
                     b.ToTable("pessoa");
-                });
-
-            modelBuilder.Entity("App.Domain.Entities.Pessoa", b =>
-                {
-                    b.HasOne("App.Domain.Entities.Cidade", "Cidade")
-                        .WithMany()
-                        .HasForeignKey("CidadeId");
-
-                    b.Navigation("Cidade");
                 });
 #pragma warning restore 612, 618
         }

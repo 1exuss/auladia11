@@ -47,11 +47,6 @@ namespace App.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "App.Api v1"));
             }
 
-            app.UseCors(builder => builder
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowAnyOrigin());
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -62,6 +57,12 @@ namespace App.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin()
+            );
         }
     }
 }

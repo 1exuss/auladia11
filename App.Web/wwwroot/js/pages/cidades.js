@@ -1,8 +1,4 @@
-﻿$(document).ready(function () {
-    load();
-});
-
-function load() {
+﻿function load() {
     CidadeListaCidades().then(function (data) {
         data.forEach(obj => {
             $('#table tbody').append('' +

@@ -4,6 +4,9 @@ using App.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace App.Api.Controllers
 {
@@ -24,18 +27,19 @@ namespace App.Api.Controllers
         {
             try
             {
-                var obj =_service.listaCidades();
+                var obj = _service.listaCidades();
                 return Json(RetornoApi.Sucesso(obj));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Json(RetornoApi.Erro(ex.Message));
             }
-            
+            //return Json(_service.listaCidades());
         }
 
         [HttpGet("BuscaPorId")]
         [AllowAnonymous]
+
         public JsonResult BuscaPorId(Guid id)
         {
             try
@@ -47,8 +51,9 @@ namespace App.Api.Controllers
             {
                 return Json(RetornoApi.Erro(ex.Message));
             }
-           // return Json(_service.BuscaPorId(id));
+
         }
+
         [HttpPost("Salvar")]
         [AllowAnonymous]
         public JsonResult Salvar(string nome, string cep, string uf)
@@ -61,24 +66,18 @@ namespace App.Api.Controllers
                     CEP = cep,
                     UF = uf
                 };
+
                 _service.Salvar(obj);
-                return Json(RetornoApi.Sucesso(obj));
+                return Json(RetornoApi.Sucesso(true));
             }
             catch (Exception ex)
             {
                 return Json(RetornoApi.Erro(ex.Message));
             }
-          //  var obj = new Cidade
-          //  {
-          //      Nome = nome,
-            //    CEP = cep,
-            //    UF = uf
-          //  };
-          //  _service.Salvar(obj);
-           // return Json(true);
+
         }
 
-        [HttpDelete("Remover")]
+        [HttpPost("Deletar")]
         [AllowAnonymous]
         public JsonResult Remover(Guid id)
         {
@@ -91,8 +90,7 @@ namespace App.Api.Controllers
             {
                 return Json(RetornoApi.Erro(ex.Message));
             }
-           // _service.Remover(id);
-          //  return Json(true);
+
         }
     }
 }
