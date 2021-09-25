@@ -1,16 +1,17 @@
-﻿async function PessoaListaPessoas(busca) {
+﻿async function PessoaListaPessoas(nome, pesoMaiorQue, pesoMenorQue) {
     return new Promise((resolve, reject) => {
-        Get('Pessoa/ListaPessoas?busca=' + busca).then(function (response) {
-            console.log(response)
-            if (response.status === 'success') {
-                resolve(response.data);
-            } else {
-                reject(response.message);
-            }
-        }, function (err) {
-            console.error(err);
-            reject('Erro desconhecido');
-        });
+        Get('Pessoa/ListaPessoas?nome=' + nome + '&pesoMaiorQue=' +
+            pesoMaiorQue + '&pesoMenorQue=' + pesoMenorQue).then(function (response) {
+                console.log(response)
+                if (response.status === 'success') {
+                    resolve(response.data);
+                } else {
+                    reject(response.message);
+                }
+            }, function (err) {
+                console.error(err);
+                reject('Erro desconhecido');
+            });
     });
 }
 

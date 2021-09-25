@@ -10,8 +10,8 @@ namespace App.Domain.Entities
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public int Peso { get; set; }
-        public DateTime? DataNascimento { get; set; }
-        public bool? Ativo { get; set; }
+        public DateTime DataNascimento { get; set; }
+        public bool Ativo { get; set; }
         public Guid? CidadeId { get; set; }
         public Cidade Cidade { get; set; }
     }

@@ -8,16 +8,19 @@
 });
 
 function load() {
-    let pessoa = $('[name="busca"]').val();
-    PessoaListaPessoas(pessoa).then(function (data) {
+    let nome = $('[name="nome"]').val();
+    let pesoMaiorQue = ($('[name="pesoMaiorQue"]').val() || 0);
+    let pesoMenorQue = ($('[name="pesoMenorQue"]').val() || 0);
+    PessoaListaPessoas(nome, pesoMaiorQue, pesoMenorQue).then(function (data) {
         $('#table tbody').html('');
         data.forEach(obj => {
             $('#table tbody').append('' +
                 '<tr id="obj-' + obj.id + '">' +
                 '<td>' + (obj.nome || '--') + '</td>' +
-                '<td>' + (moment(obj.dataNascimento || '--').format('dd/mm/yyyy'))+ '</td>' +
                 '<td>' + (obj.peso || '--') + '</td>' +
-                '<td>' + (obj.ativo || '--') + '</td>' +
+                '<td>' + (moment(obj.dataNascimento).format('DD/MM/YYYY') || '--') + '</td>' +
+                '<td>' + (obj.cidade.nome || '--') + '</td>' +
+                '<td>' + (obj.ativo === true ? 'Ativo' : 'Inativo') + '</td>' +
                 '</tr>');
         });
     });
