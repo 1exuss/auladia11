@@ -1,4 +1,5 @@
-﻿using App.Domain.DTO;
+﻿using App.Common;
+using App.Domain.DTO;
 using App.Domain.Entities;
 using App.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
@@ -34,13 +35,17 @@ namespace App.Api.Controllers
         [HttpGet("BuscaPorId")]
         public JsonResult BuscaPorId(Guid id)
         {
-            return Json(_service.BuscaPorId(id));
+            return Json(RetornoApi.Sucesso(_service.BuscaPorId(id)));
         }
         [HttpPost("Salvar")]
         public JsonResult Salvar([FromBody] Pessoa obj)
         {
             try
             {
+                if (!obj.Cpf.CpfCnpjValido())
+                {
+                    throw new Exception("Cpf Cadastrado Invalido!");
+                }
                 _service.Salvar(obj);
                 return Json(RetornoApi.Sucesso(true));
             }

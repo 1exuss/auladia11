@@ -42,7 +42,9 @@ namespace App.Application.Services
                     Nome = p.Cidade.Nome
                 },
                 Ativo = p.Ativo,
-                DataNascimento = p.DataNascimento
+                DataNascimento = p.DataNascimento,
+                Telefone = p.Telefone,
+                Cpf = p.Cpf
             }).OrderByDescending(x => x.Nome).ToList();
         }
         public void Remover(Guid id)
@@ -51,11 +53,21 @@ namespace App.Application.Services
             _repository.SaveChanges();
         }
         public void Salvar(Pessoa obj)
-        {
+        {      
+
             if (String.IsNullOrEmpty(obj.Nome))
             {
                 throw new Exception("Informe o nome");
             }
+            if (obj.Id == Guid.Empty)
+            {
+                bool existe = _repository.Query(x => x.Cpf == obj.Cpf).Any();
+                if (existe)
+                {
+                    throw new Exception("CPF existe na lista de Pessoas");
+                }
+            }
+
             _repository.Save(obj);
             _repository.SaveChanges();
         }

@@ -1,4 +1,4 @@
-﻿@page "/pessoa/formulario"
+﻿@page "/pessoa/formulario/{id?}"
 <h4>Formulário de Pessoas</h4>
 <div class="card">
     <div class="card-body">
@@ -9,12 +9,11 @@
                     <input type="text" name="nome" class="form-control">
                 </div>
             </div>
-            
+
             <div class="col-md-6 col-sm-12">
                 <div class="form-group mb-12">
                     <label>Cidade</label>
                     <select class="js-example-basic-single" style="width:100%" name="cidadeId" id="cidadeId">
-
                     </select>
                 </div>
             </div>
@@ -31,14 +30,32 @@
                     <input type="date" name="dataNascimento" class="form-control">
                 </div>
             </div>
+            <div class="col-md-3 col-sm-12">
+                <div class="form-group mb-12">
+                    <label>Telefone</label>
+                    <input type="text" name="telefone" onkeypress="$(this).mask('(00) 0000-00009')" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <div class="form-group mb-12">
+                    <label>CPF</label>
+                    <input type="text" name="cpf" onkeypress="$(this).mask('000.000.000-00');" class="form-control">
+                </div>
+            </div>
+            <div class="form-check col-sm-12">
+                <input type="checkbox" name="ativo" id="ativo" class="form-check-input">
+                <label class="form-check-label" for="exampleCheck1">Ativo?</label>
+            </div>
             <div class="col-md-12 text-right">
                 <button class="btn btn-danger" onclick="window.location.href='/pessoa'">Cancelar</button>
                 <button class="btn btn-success" onclick="salvar();">Salvar</button>
             </div>
+
         </div>
     </div>
 </div>
 
 @section Scripts {
     <script src="~/js/pages/pessoa-formulario.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 }
